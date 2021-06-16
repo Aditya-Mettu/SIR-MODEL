@@ -1,0 +1,1 @@
+python3 -m src.python.SecondWave_All_SIR_MGDM
