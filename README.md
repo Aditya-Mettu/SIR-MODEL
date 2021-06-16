@@ -24,3 +24,11 @@ This repository contains all files related to SIR model developed on Covid data
 * Add names of the cities to data/cityNames.txt and add names of the states to data/stateNames.txt.
 * Then run data/CityAndStateJsonMaker.py to update the JSON file.
 * The program reads data from the cityAndStateNames.json file.
+
+## Other details:
+
+* The main python file is [SecondWave_All_SIR_MGDM.py]
+* It uses a toImport module which has a functions module in it.
+* toImport mainly defines every module and other functions needed for the main file to run.
+* toImport has some constants.py with dummyFileName and clear.py which has clear function which is matlab clc equivalent.
+* functions sub-module has getDistrictNames and getStateNames functions in GetDistrictAndStateNames.py and urlwrite in URLWrite.py
