@@ -17,6 +17,8 @@ This repository contains all files related to SIR model developed on Covid data
 
 ## If in case you want to run without script:
 
+    git clone https://github.com/Aditya-Mettu/SIR-MODEL
+    cd SIR-MODEL
     python -m src.python.SecondWave_All_SIR_MGDM
 
 ## To add cities and state names:
