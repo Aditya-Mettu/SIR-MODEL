@@ -18,3 +18,9 @@ This repository contains all files related to SIR model developed on Covid data
 ## If in case you want to run without script:
 
     python -m src.python.SecondWave_All_SIR_MGDM
+
+## To add cities and state names:
+
+* Add names of the cities to data/cityNames.txt and add names of the states to data/stateNames.txt.
+* Then run data/CityAndStateJsonMaker.py to update the JSON file.
+* The program reads data from the cityAndStateNames.json file.
