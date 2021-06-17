@@ -1,5 +1,4 @@
 from src.python.toImport import *
-from datetime import datetime
 
 ifplotPR = True
 dists = True
@@ -29,7 +28,8 @@ if __name__ == "__main__":
 
     urlwrite(fullName, dummyFileName)
 
-    tableAll = pd.read_csv(dummyFileName)
+    tableAll = pd.read_csv(dummyFileName, na_values={'Tested':['']})
+    tableAll.Date = pd.to_datetime(tableAll.Date, format="%Y-%m-%d")
 
     span1 = 14
 
@@ -39,11 +39,26 @@ if __name__ == "__main__":
     for n in range(len(name)):
 
         Location = name[n]
+        tableLocation = None
 
         if dists:
-            pass
+            tableLocation = tableAll[(tableAll.District == Location) & (tableAll.Date >= pd.to_datetime('1-3-2020', format='%d-%m-%Y'))]
+
+            R = tableLocation['Recovered']
+            D = tableLocation['Deceased']
+            C = tableLocation['Confirmed']
+            O = tableLocation['Other']
+            T = tableLocation['Tested']
+
+            print(tableLocation)
+
         else:
-            pass
+            tableLocation = tableAll[(tableAll.State == Location) & (tableAll.Date >= pd.to_datetime('1-3-2020', format='%d-%m-%Y'))]
 
+            R = tableLocation['Recovered']
+            D = tableLocation['Deceased']
+            C = tableLocation['Confirmed']
+            O = tableLocation['Other']
+            T = tableLocation['Tested']
 
-        print("Works Fine.")
+        print(tableLocation)
