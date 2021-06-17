@@ -40,6 +40,7 @@ if __name__ == "__main__":
 
         Location = name[n]
         tableLocation = None
+        R, D, C, O, T = None, None, None, None, None
 
         if dists:
             tableLocation = tableAll[(tableAll.District == Location) & (tableAll.Date >= pd.to_datetime('1-3-2020', format='%d-%m-%Y'))]
@@ -49,9 +50,6 @@ if __name__ == "__main__":
             C = tableLocation['Confirmed']
             O = tableLocation['Other']
             T = tableLocation['Tested']
-
-            print(tableLocation)
-
         else:
             tableLocation = tableAll[(tableAll.State == Location) & (tableAll.Date >= pd.to_datetime('1-3-2020', format='%d-%m-%Y'))]
 
@@ -60,5 +58,7 @@ if __name__ == "__main__":
             C = tableLocation['Confirmed']
             O = tableLocation['Other']
             T = tableLocation['Tested']
+ 
+        A = C - D - O - R # Active cases
 
-        print(tableLocation)
+        
