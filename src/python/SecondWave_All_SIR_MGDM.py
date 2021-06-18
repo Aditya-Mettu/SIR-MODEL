@@ -71,9 +71,16 @@ if __name__ == "__main__":
 
         if debug:
             fig = plt.figure()
+            fig.add_subplot(2, 1, (1))
 
-            plt.plot(date, C)
+            plt.stem(date, C)
             plt.xlabel('Date')
             plt.ylabel('Confirmed Cases')
             
+            fig.add_subplot(2, 1, (2))
+
+            plt.stem(date[1:], dailyC)
+            plt.xlabel('Date')
+            plt.ylabel('Infection rate')
+
             plt.show()
