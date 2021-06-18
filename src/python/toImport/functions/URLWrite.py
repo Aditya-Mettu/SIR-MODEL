@@ -1,5 +1,4 @@
 import requests
-import csv
 
 def urlwrite(url, fileName):
     response = requests.get(url)

@@ -1,4 +1,4 @@
-json
 pandas
 datetime
 requests
+matplotlib

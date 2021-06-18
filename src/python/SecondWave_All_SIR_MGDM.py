@@ -9,6 +9,7 @@ span = 7
 if __name__ == "__main__":
     clear()
 
+    # To avoid scope related problems
     fullName = None
     sb_number = None 
     name = None 
@@ -17,13 +18,13 @@ if __name__ == "__main__":
         fullName = 'https://api.covid19india.org/csv/latest/districts.csv'
         name = getDistrictNames()
 
-        tt1 = datetime(2020, 4, 26)
+        tt1 = pd.to_datetime('2020-04-26', format = DateFormat)
         sb_number = 4
     else:
         fullName = 'https://api.covid19india.org/csv/latest/states.csv'
         name = getStateNames()
 
-        tt1 = datetime(2020, 3, 14)
+        tt1 = pd.to_datetime('2020-03-14', format = DateFormat)
         sb_number = 5
 
     urlwrite(fullName, dummyFileName)
@@ -39,26 +40,40 @@ if __name__ == "__main__":
     for n in range(len(name)):
 
         Location = name[n]
+
+        # To avoid scope related problems.
         tableLocation = None
         R, D, C, O, T = None, None, None, None, None
 
+        dateInit = pd.to_datetime('2020-03-01', format = DateFormat)
+
         if dists:
-            tableLocation = tableAll[(tableAll.District == Location) & (tableAll.Date >= pd.to_datetime('1-3-2020', format='%d-%m-%Y'))]
+            tableLocation = tableAll[(tableAll.District == Location) & (tableAll.Date >= dateInit)]
 
-            R = tableLocation['Recovered']
-            D = tableLocation['Deceased']
-            C = tableLocation['Confirmed']
-            O = tableLocation['Other']
-            T = tableLocation['Tested']
+            R = tableLocation['Recovered'].to_numpy()
+            D = tableLocation['Deceased'].to_numpy()
+            C = tableLocation['Confirmed'].to_numpy()
+            O = tableLocation['Other'].to_numpy()
+            T = tableLocation['Tested'].to_numpy()
         else:
-            tableLocation = tableAll[(tableAll.State == Location) & (tableAll.Date >= pd.to_datetime('1-3-2020', format='%d-%m-%Y'))]
+            tableLocation = tableAll[(tableAll.State == Location) & (tableAll.Date >= dateInit)]
 
-            R = tableLocation['Recovered']
-            D = tableLocation['Deceased']
-            C = tableLocation['Confirmed']
-            O = tableLocation['Other']
-            T = tableLocation['Tested']
+            R = tableLocation['Recovered'].to_numpy()
+            D = tableLocation['Deceased'].to_numpy()
+            C = tableLocation['Confirmed'].to_numpy()
+            O = tableLocation['Other'].to_numpy()
+            T = tableLocation['Tested'].to_numpy()
  
+        date = tableLocation['Date'].to_numpy()
         A = C - D - O - R # Active cases
 
-        
+        dailyC = np.diff(C)
+
+        if debug:
+            fig = plt.figure()
+
+            plt.plot(date, C)
+            plt.xlabel('Date')
+            plt.ylabel('Confirmed Cases')
+            
+            plt.show()
