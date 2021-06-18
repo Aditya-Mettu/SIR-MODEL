@@ -33,7 +33,7 @@ We have made code in two formats.
 
 ## Other details:
 
-* The main python file is [SecondWave_All_SIR_MGDM.py]
+* The main python file is [SecondWave_All_SIR_MGDM.py](https://github.com/Aditya-Mettu/SIR-MODEL/blob/main/src/python/SecondWave_All_SIR_MGDM.py)
 * It uses a toImport module which has a functions module in it.
 * toImport mainly defines every module and other functions needed for the main file to run.
 * toImport has some constants.py with dummyFileName and clear.py which has clear function which is matlab clc equivalent.
