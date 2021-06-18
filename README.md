@@ -1,7 +1,11 @@
 # SIR-MODEL
 This repository contains all files related to SIR model developed on Covid data
+We have made code in two formats.
 
-## How to run this project?
+1. Python-module
+2. Standalone Jupyter notebook
+
+## How to run this Python module?
 
 * Step 1: Move the SIR-MODEL directory.
 * Step 2: Execute main.sh or main.bat depending on the OS.
