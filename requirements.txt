@@ -1,4 +1,3 @@
 pandas
-datetime
-requests
 matplotlib
+numpy

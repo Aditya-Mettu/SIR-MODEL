@@ -29,8 +29,9 @@ if __name__ == "__main__":
 
     urlwrite(fullName, dummyFileName)
 
-    tableAll = pd.read_csv(dummyFileName, na_values={'Tested':['']})
+    tableAll = pd.read_csv(dummyFileName, na_values={'Tested':['', 0]})
     tableAll.Date = pd.to_datetime(tableAll.Date, format="%Y-%m-%d")
+    tableAll.fillna(method = 'bfill', inplace=True)
 
     span1 = 14
 
@@ -84,3 +85,45 @@ if __name__ == "__main__":
             plt.ylabel('Infection rate')
 
             plt.show()
+
+        PR = (np.diff(movmean(C,span)) / np.diff(movmean(T,span))) *100
+        CFR = (np.diff(movmean(D,span)) / np.diff(movmean(C,span))) *100
+        Testing = np.diff(T)
+
+        date0 = np.copy(date)
+        tt1 = None
+
+        if dists:
+            tt1 = str(date0[0])
+            sb_number = 4
+        else:
+            tt1 = str(date0[0])
+            sb_number = 5
+        
+        date1 = pd.to_datetime('2021-4-1', format = DateFormat)
+
+        dateEnd = date[-1]
+
+        tableLocation1 = tableLocation[(tableLocation.Date > date1) & (tableLocation.Date < dateEnd)]
+
+        date = tableLocation1['Date'].to_numpy()
+        C = tableLocation1['Confirmed'].to_numpy()
+        D = tableLocation1['Deceased'].to_numpy()
+        R = tableLocation1['Recovered'].to_numpy()
+        Npop = int('80e6', 16)
+
+        init = Init(Location, date, C, D, R, Npop)
+        # Init is a simple class to save data like a struct object.
+
+        diffC = np.diff(init.C)
+
+        q1 = diffC[0]
+        q2 = diffC[-1]
+        t = diffC.shape[0]
+
+        Cexp = np.copy(init.C)
+        texp = list(range(1, Cexp.shape[0] + 1))
+
+        returnVal = Chebyshev.fit(texp, Cexp, deg = 2)
+
+        print(returnVal)
