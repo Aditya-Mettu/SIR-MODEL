@@ -1,4 +1,5 @@
 from src.python.toImport import *
+import warnings
 
 ifplotPR = True
 dists = True
@@ -93,7 +94,6 @@ if __name__ == "__main__":
             Testing = np.diff(T)
         CFR = (np.diff(movmean(D,span)) / np.diff(movmean(C,span))) *100
 
-
         date0 = np.copy(date)
         tt1 = None
 
@@ -126,6 +126,8 @@ if __name__ == "__main__":
         q2 = diffC[-1]
         t = diffC.shape[0]
 
+        ## Using exponential model
+
         Cexp = np.copy(init.C)
         # print(Cexp)
         texp = np.array(list(range(1, Cexp.shape[0] + 1)))
@@ -137,6 +139,20 @@ if __name__ == "__main__":
 
         tnew = texp + 120
 
-        EXP = Exp(np.copy(date), funcExp1(tnew, *f))
+        EXP = ModelClass(date, funcExp1(tnew, *f))
+
+        if debug == 0:
+            fig = plt.figure()
+            plt.plot(texp, EXP.C)
+            plt.show()
+
+        ## Using Logistic model
+
+        flog = fit(texp, Cexp, 'logistic')
+
+        ## Using For coefficients
+        
+        logmdl = fit(texp, Cexp, 'logmdl')
+        LOG = ModelClass(date, funcLogmdl(tnew, *logmdl))
 
         print("OK")

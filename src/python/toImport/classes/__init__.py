@@ -1,2 +1,2 @@
 from .InitElement import Init
-from .ExpClass import Exp
+from .modelClass import ModelClass
