@@ -86,13 +86,18 @@ if __name__ == "__main__":
 
             plt.show()
 
-        PR = (np.diff(movmean(C,span)) / np.diff(movmean(T,span))) *100
+        PR, CFR, Testing = None, None, None
+        if not dists:    
+            # PR is not used for districts, it is just for the states.
+            PR = (np.diff(movmean(C,span)) / np.diff(movmean(T,span))) *100
+            Testing = np.diff(T)
         CFR = (np.diff(movmean(D,span)) / np.diff(movmean(C,span))) *100
-        Testing = np.diff(T)
+
 
         date0 = np.copy(date)
         tt1 = None
 
+        
         if dists:
             tt1 = str(date0[0])
             sb_number = 4
@@ -122,8 +127,16 @@ if __name__ == "__main__":
         t = diffC.shape[0]
 
         Cexp = np.copy(init.C)
-        texp = list(range(1, Cexp.shape[0] + 1))
+        # print(Cexp)
+        texp = np.array(list(range(1, Cexp.shape[0] + 1)))
 
-        returnVal = Chebyshev.fit(texp, Cexp, deg = 2)
+        f = fit(texp, Cexp, 'exp1')
 
-        print(returnVal)
+        coeff = list(f)
+        td_2 = log(2)/coeff[1]
+
+        tnew = texp + 120
+
+        EXP = Exp(np.copy(date), funcExp1(tnew, *f))
+
+        print("OK")
